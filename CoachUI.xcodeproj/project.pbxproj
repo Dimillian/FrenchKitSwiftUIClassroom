@@ -76,7 +76,6 @@
 			children = (
 				69166E79231D1A7F00A5F192 /* launch */,
 				69166E7B231D1A9600A5F192 /* views */,
-				69166E8F231D712400A5F192 /* extensions */,
 				69166E7A231D1A9300A5F192 /* models */,
 				69166E6A231CF60B00A5F192 /* Assets.xcassets */,
 				69166E6F231CF60B00A5F192 /* LaunchScreen.storyboard */,
@@ -125,13 +124,6 @@
 				69AF8F24232696B2002B763E /* WorkoutResultView.swift */,
 			);
 			path = views;
-			sourceTree = "<group>";
-		};
-		69166E8F231D712400A5F192 /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = extensions;
 			sourceTree = "<group>";
 		};
 		69166E92231D788100A5F192 /* rows */ = {

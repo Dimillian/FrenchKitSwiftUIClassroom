@@ -49,6 +49,7 @@ struct WorkoutTimer: View {
     
     var body: some View {
         ZStack {
+            // Gradient
             GeometryReader { geometry in
                 Path { (path) in
                     let size: CGFloat = min(geometry.size.width, geometry.size.height) * 0.7
@@ -62,6 +63,7 @@ struct WorkoutTimer: View {
                     endPoint: .init(x: 0.5, y: 0.6)
                 ))
             }
+            // Border
             GeometryReader { geometry in
                 Path { (path) in
                     let size: CGFloat = min(geometry.size.width, geometry.size.height) * 0.7
@@ -71,6 +73,7 @@ struct WorkoutTimer: View {
                     
                 }.stroke(lineWidth: 10).foregroundColor(Color.gray)
             }
+            // Progress
             GeometryReader { geometry in
                 Path { (path) in
                     let size: CGFloat = min(geometry.size.width, geometry.size.height) * 0.7

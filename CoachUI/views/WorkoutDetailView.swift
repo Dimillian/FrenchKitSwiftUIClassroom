@@ -10,7 +10,8 @@ import SwiftUI
 
 struct WorkoutDetailView: View {
     @EnvironmentObject var store: WorkoutsStore
-    let workout: Workout
+    @ObservedObject var workout: Workout
+    @State private var isWorkoutFormPresented = false
     
     private var favButton: some View {
         Button(action: {
@@ -21,6 +22,28 @@ struct WorkoutDetailView: View {
                 .foregroundColor(.yellow)
         })
     }
+    
+    private var deleteButton: some View {
+        Button(action: {
+            if let index = self.store.workouts.firstIndex(of: self.workout) {
+                self.store.removeWorkout(at: index)
+            }
+        }, label: {
+            Image(systemName: "trash")
+                .imageScale(.large)
+                .foregroundColor(.red)
+        })
+    }
+    
+    
+    private var editButton: some View {
+        Button(action: {
+            self.isWorkoutFormPresented = true
+        }, label: {
+            Text("Edit").foregroundColor(.blue)
+        })
+    }
+    
     var body: some View {
         List {
             Section(header: Text("Exercices")) {
@@ -38,9 +61,18 @@ struct WorkoutDetailView: View {
                 }
             }
         }
-        .navigationBarItems(trailing: favButton)
+        .navigationBarItems(trailing:
+            HStack {
+                favButton.padding()
+                deleteButton
+                editButton
+            })
         .listStyle(GroupedListStyle())
         .navigationBarTitle(workout.name)
+        .sheet(isPresented: $isWorkoutFormPresented,
+               content: { WorkoutCreatorView(editingWorkout: self.workout).environmentObject(self.store)
+                
+        })
     }
 }
 

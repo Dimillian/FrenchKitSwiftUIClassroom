@@ -12,8 +12,8 @@ import SwiftUI
 class WorkoutsStore: ObservableObject {
     static var sharedStore : WorkoutsStore!
     
-    var workouts: [Workout] = []
-    var favorites: [String] = []
+    @Published var workouts: [Workout] = []
+    @Published var favorites: [String] = []
     
     init() {
         workouts.append(contentsOf: buildDefaultWorkouts())
@@ -25,6 +25,10 @@ class WorkoutsStore: ObservableObject {
     
     func insertWorkout(workout: Workout) {
         workouts.append(workout)
+    }
+    
+    func editWorkout(workout: Workout) {
+
     }
     
     func removeWorkout(at index: Int) {

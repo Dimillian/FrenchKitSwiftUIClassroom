@@ -12,6 +12,9 @@ struct WorkoutCreatorView: View {
     
     //MARK: - Properties
     @EnvironmentObject var store: WorkoutsStore
+    @Environment(\.presentationMode) var presentationMode
+    
+    var editingWorkout: Workout?
     
     @State private var workoutName = ""
     @State private var exercises: [Exercise] = []
@@ -22,11 +25,17 @@ struct WorkoutCreatorView: View {
     // MARK: - nav buttons
     private var saveButton: some View {
         Button(action: {
-            let workout = Workout(name: self.workoutName)
-            for exercise in self.exercises {
-                workout.addExercise(exercise: exercise)
+            if let editing = self.editingWorkout {
+                self.editingWorkout?.name = self.workoutName
+                self.editingWorkout?.exercises = self.exercises
+            } else {
+                let workout = Workout(name: self.workoutName)
+                for exercise in self.exercises {
+                    workout.addExercise(exercise: exercise)
+                }
+                self.store.insertWorkout(workout: workout)
             }
-            self.store.insertWorkout(workout: workout)
+            self.presentationMode.wrappedValue.dismiss()
         }, label: {
             Text("Save")
         })
@@ -34,7 +43,7 @@ struct WorkoutCreatorView: View {
     
     private var cancelButton: some View {
         Button(action: {
-            
+            self.presentationMode.wrappedValue.dismiss()
         }, label: {
             Text("Cancel")
                 .foregroundColor(.red)
@@ -97,11 +106,17 @@ struct WorkoutCreatorView: View {
                 }
                 addExerciseSection
             }
+            .onAppear{
+                if let editing = self.editingWorkout {
+                    self.workoutName = editing.name
+                    self.exercises = editing.exercises
+                }
+            }
             .navigationBarTitle("Create a new workout",
                                 displayMode: .inline)
             .navigationBarItems(leading: cancelButton, trailing: saveButton)
             
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
