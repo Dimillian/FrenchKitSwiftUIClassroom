@@ -109,6 +109,8 @@ struct WorkoutResultView: View {
         
         return result
     }
+    
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         // last 7 days
         let cStats = stats
@@ -137,6 +139,11 @@ struct WorkoutResultView: View {
                     Text("Total duration in s")
                 } else {
                     Text("Total count")
+                }
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Close")
                 }
             }
             .frame(height: 250)

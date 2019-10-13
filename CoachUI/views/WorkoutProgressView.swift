@@ -13,7 +13,14 @@ struct WorkoutProgressView: View {
     
     @State private var isStarted = false
     @State private var currentExercice: Exercise!
-    @State private var showResultView: Bool = false
+    @State private var showResultView: Bool = false {
+        willSet {
+            if newValue {
+                // done, so save the new session
+                Workout.saveWorkout(self.workout)
+            }
+        }
+    }
     
     private var buttonsView: some View {
         HStack(alignment: .center, spacing: 32) {
