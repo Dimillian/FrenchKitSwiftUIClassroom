@@ -68,6 +68,13 @@ struct ToggleTextButton: View {
     }
 }
 
+// from https://stackoverflow.com/questions/24051314/precision-string-format-specifier-in-swift
+extension Double {
+    func format(_ f: String) -> String {
+        return String(format: "%\(f)f", self)
+    }
+}
+
 struct WorkoutResultView: View {
     @ObservedObject var workout: Workout
     @State var type : GraphType = .duration
@@ -130,6 +137,7 @@ struct WorkoutResultView: View {
                                                  range: Range(uncheckedBounds: (0, self.type == .duration ? datum.duration : datum.count)),
                                                  overallRange: overallRange
                                     ).colorMultiply(self.color)
+                                    Text("\(self.type == .duration ? datum.duration.format(".0") : datum.count.format(".0"))").rotationEffect(Angle(degrees: -90))
                                 }
                             }.offset(x: 0, y: geom.size.height * heightRatio)
                         }.padding()
